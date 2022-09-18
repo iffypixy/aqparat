@@ -1,0 +1,15 @@
+{
+  "name": "aqparat",
+  "version": "0.1.0",
+  "description": "A service for volunteers in Kazakhstan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iffypixy/aqparat.git"
+  },
+  "author": "Ansat Euler <ansssssat@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iffypixy/aqparat/issues"
+  },
+  "homepage": "https://github.com/iffypixy/aqparat#readme"
+}
