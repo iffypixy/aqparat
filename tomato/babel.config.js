@@ -1,4 +1,4 @@
-const corejs = "3.22.3";
+const corejs = "3.25.2";
 
 module.exports = {
   minified: true,
