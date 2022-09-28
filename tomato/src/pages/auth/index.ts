@@ -1,2 +1,3 @@
 export {LoginPage} from "./login";
-export {RegisterPage} from "./register";
+export {RegisterAsOrgPage} from "./register-as-organisation";
+export {RegisterAsVolunteerPage} from "./register-as-volunteer";

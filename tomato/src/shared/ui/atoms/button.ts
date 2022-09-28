@@ -1,12 +1,25 @@
+import {Button as B} from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
-export const Button = styled("button")`
-  color: #2d2d2d;
+export const Button = styled(B)`
+  color: #fff;
+  font-size: 1.6rem;
   font-family: "Montserrat", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
+  height: auto;
   background-color: #fdb25a;
-  border: none;
   border-radius: 5px;
-  cursor: pointer;
   padding: 1.5rem 2.5rem;
+
+  &:disabled {
+    background-color: #fdb25a;
+
+    &:hover {
+      background-color: #fdb25a;
+    }
+  }
+
+  &:hover {
+    background-color: #fdb25a;
+  }
 `;

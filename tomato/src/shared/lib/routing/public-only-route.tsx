@@ -1,3 +1,4 @@
+import {viewerModel} from "@entities/viewer";
 import * as React from "react";
 import {Navigate} from "react-router-dom";
 
@@ -6,8 +7,7 @@ interface PublicOnlyRouteProps {
 }
 
 export const PublicOnlyRoute: React.FC<PublicOnlyRouteProps> = ({children}) => {
-  // @todo: check if is authenticated
-  const isAuthenticated = false;
+  const isAuthenticated = !!viewerModel.useCredentials();
 
   if (!isAuthenticated) return <>{children}</>;
 

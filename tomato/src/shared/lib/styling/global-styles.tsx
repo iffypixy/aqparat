@@ -8,29 +8,35 @@ import MontserratMedium from "@public/fonts/Montserrat-Medium.woff2";
 import MontserratBold from "@public/fonts/Montserrat-Bold.woff2";
 import MontserratRegular from "@public/fonts/Montserrat-Regular.woff2";
 
-const styles = () => css`
+const styles = css`
   ${normalized}
 
   html {
     font-size: 62.5%;
     box-sizing: border-box;
 
-    @media (max-width: 320px) {
+    @media only screen and (max-width: 1400px) {
+      font-size: 62.5%;
     }
 
-    @media (max-width: 576px) {
+    @media only screen and (max-width: 1200px) {
+      font-size: 55%;
     }
 
-    @media (max-width: 768px) {
+    @media only screen and (max-width: 992px) {
+      font-size: 50%;
     }
 
-    @media (max-width: 992px) {
+    @media only screen and (max-width: 768px) {
+      font-size: 45%;
     }
 
-    @media (max-width: 1200px) {
+    @media only screen and (max-width: 576px) {
+      font-size: 40%;
     }
 
-    @media (max-width: 1400px) {
+    @media only screen and (max-width: 320px) {
+      font-size: 30%;
     }
   }
 
@@ -46,6 +52,7 @@ const styles = () => css`
     font-size: 1.6rem;
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
+    background-color: #ffead1;
   }
 
   @font-face {
