@@ -9,6 +9,7 @@ export interface ViewerStore {
   type: UserType | null;
   volunteer: VolunteerCredentials | null;
   organisation: OrganisationCredentials | null;
+  isAuthenticated: boolean;
 }
 
 export const store = createReducer<ViewerStore>(
@@ -16,6 +17,7 @@ export const store = createReducer<ViewerStore>(
     type: null,
     organisation: null,
     volunteer: null,
+    isAuthenticated: false,
   },
   {
     [actions.setViewerType.type]: (
@@ -31,6 +33,7 @@ export const store = createReducer<ViewerStore>(
     ) => {
       //@ts-ignore
       state[payload.type] = payload.credentials;
+      state.isAuthenticated = true;
     },
   },
 );

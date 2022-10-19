@@ -28,6 +28,7 @@ const Wrapper = styled("div")`
 
 const Header = styled("header")`
   width: 100%;
+  z-index: 100;
 `;
 
 const Main = styled("main")`

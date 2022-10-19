@@ -1,66 +1,51 @@
 import * as React from "react";
-
-import {Template} from "@shared/ui/templates";
-import {Header} from "@widgets/header";
 import styled from "@emotion/styled";
-import {Container, Text} from "@chakra-ui/react";
+import {Container, HStack, Text, VStack} from "@chakra-ui/react";
+
+import {Header} from "@widgets/header";
+import {Template} from "@shared/ui/templates";
 import {Button} from "@shared/ui/atoms";
 
 import lock from "@shared/assets/lock.png";
 
-export const HomePublic: React.FC = () => {
-  return (
-    <Template.Main header={<Header />}>
-      <Container maxW="container.xl">
-        <Wrapper>
-          <Head>
-            <HeadTextBlock>
-              <Title>The Only Storage for Volunteers’ Achievements</Title>
+export const HomePublic: React.FC = () => (
+  <Template.Main header={<Header />}>
+    <Container maxW="container.xl">
+      <HStack w="100%" justify="center" mt="6rem">
+        <VStack justify="flex-start" align="flex-start" spacing="3rem">
+          <Title>The Only Storage for Volunteers’ Achievements</Title>
 
-              <Slogan>
-                Aqparat believes that all efforts should be visible
-              </Slogan>
+          <Slogan>Aqparat believes that all efforts should be visible</Slogan>
 
-              <Button>Start now</Button>
-            </HeadTextBlock>
+          {/* <Button>Start now</Button> */}
+        </VStack>
 
-            <IMG src={lock} />
-          </Head>
-        </Wrapper>
-      </Container>
-    </Template.Main>
-  );
-};
+        <IMG src={lock} />
+      </HStack>
+    </Container>
+  </Template.Main>
+);
 
-const Wrapper = styled("div")`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Head = styled("div")`
-  width: 100%;
-  display: flex;
-  margin-top: 6rem;
-`;
-
-const HeadTextBlock = styled("div")`
-  & > :not(:last-child) {
-    margin-bottom: 3rem;
-  }
-`;
-
-const Title = styled("h2")`
-  font-size: 7.25rem;
+const Title = styled("h1")`
+  color: #2d2d2d;
+  font-size: 6.5rem;
   font-weight: 700;
   line-height: 1.35;
+  text-transform: uppercase;
 `;
 
 const Slogan = styled(Text)`
   color: #2d2d2d;
-  font-size: 2.4rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.65;
 `;
 
 const IMG = styled("img")`
   width: 75rem;
+
+  @media only screen and (max-width: 992px) {
+    display: none;
+  }
 `;

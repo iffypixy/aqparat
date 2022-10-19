@@ -4,11 +4,12 @@ import styled from "@emotion/styled";
 export const Button = styled(B)`
   color: #fff;
   font-size: 1.6rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 500;
   height: auto;
   background-color: #fdb25a;
   border-radius: 5px;
+  text-transform: uppercase;
   padding: 1.5rem 2.5rem;
 
   &:disabled {

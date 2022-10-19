@@ -3,10 +3,10 @@ import {css, Global} from "@emotion/react";
 
 import {normalized} from "./normalized";
 
-import MontserratLight from "@public/fonts/Montserrat-Light.woff2";
-import MontserratMedium from "@public/fonts/Montserrat-Medium.woff2";
-import MontserratBold from "@public/fonts/Montserrat-Bold.woff2";
-import MontserratRegular from "@public/fonts/Montserrat-Regular.woff2";
+import RubikLight from "@public/fonts/Rubik-Light.woff2";
+import RubikMedium from "@public/fonts/Rubik-Medium.woff2";
+import RubikBold from "@public/fonts/Rubik-Bold.woff2";
+import RubikRegular from "@public/fonts/Rubik-Regular.woff2";
 
 const styles = css`
   ${normalized}
@@ -24,19 +24,19 @@ const styles = css`
     }
 
     @media only screen and (max-width: 992px) {
-      font-size: 50%;
+      font-size: 52.5%;
     }
 
     @media only screen and (max-width: 768px) {
-      font-size: 45%;
+      font-size: 50%;
     }
 
     @media only screen and (max-width: 576px) {
-      font-size: 40%;
+      font-size: 45%;
     }
 
     @media only screen and (max-width: 320px) {
-      font-size: 30%;
+      font-size: 40%;
     }
   }
 
@@ -50,33 +50,55 @@ const styles = css`
 
   body {
     font-size: 1.6rem;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Rubik", sans-serif;
     font-weight: 400;
     background-color: #ffead1;
   }
 
   @font-face {
-    font-family: "Montserrat";
+    font-family: "Rubik";
     font-weight: 300;
-    src: url(${MontserratLight}) format("woff2");
+    src: url(${RubikLight}) format("woff2");
   }
 
   @font-face {
-    font-family: "Montserrat";
+    font-family: "Rubik";
     font-weight: 400;
-    src: url(${MontserratRegular}) format("woff2");
+    src: url(${RubikRegular}) format("woff2");
   }
 
   @font-face {
-    font-family: "Montserrat";
+    font-family: "Rubik";
     font-weight: 500;
-    src: url(${MontserratMedium}) format("woff2");
+    src: url(${RubikMedium}) format("woff2");
   }
 
   @font-face {
-    font-family: "Montserrat";
+    font-family: "Rubik";
     font-weight: 700;
-    src: url(${MontserratBold}) format("woff2");
+    src: url(${RubikBold}) format("woff2");
+  }
+
+  .rti--container {
+    width: 100%;
+    background: none;
+    border: 1px solid #2d2d2d;
+    border-bottom: 2px solid #2d2d2d;
+    padding: 1rem;
+    text-transform: uppercase;
+
+    input {
+      width: 100%;
+      background: none;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 1.4rem;
+
+      &::placeholder {
+        color: #747474;
+        opacity: 0.65;
+      }
+    }
   }
 `;
 

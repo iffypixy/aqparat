@@ -3,21 +3,25 @@ import styled from "@emotion/styled";
 import {useForm} from "react-hook-form";
 
 import {authModel, AuthTemplate} from "@features/auth";
-import {Button, H1, Input, Link} from "@shared/ui/atoms";
+import {Button, Input, Link} from "@shared/ui/atoms";
 import {regex} from "@shared/lib/regex";
 import {useDispatch} from "@shared/lib/store";
+import {VStack} from "@chakra-ui/react";
 
 export const RegisterAsOrgPage: React.FC = () => {
   return (
     <AuthTemplate>
       <Wrapper>
-        <H1>Sign up as organisation</H1>
+        <Title>Sign up as organisation</Title>
         <RegisterForm />
-        <Link to="/login">Log in</Link>
 
-        <Link to="/register-as-volunteer">
-          Are you a volunteer? Sign up as volunteer here
-        </Link>
+        <VStack>
+          <RegisterLink to="/login">Log in</RegisterLink>
+
+          <RegisterLink to="/register-as-volunteer">
+            Are you a volunteer? Sign up as volunteer here
+          </RegisterLink>
+        </VStack>
       </Wrapper>
     </AuthTemplate>
   );
@@ -32,10 +36,25 @@ const Wrapper = styled("div")`
   }
 `;
 
+const Title = styled("h1")`
+  color: #2d2d2d;
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+`;
+
+const RegisterLink = styled(Link)`
+  font-size: 1.4rem;
+  text-decoration: underline;
+  text-transform: uppercase;
+  opacity: 0.65;
+`;
+
 interface RegisterFormData {
   email: string;
   name: string;
   password: string;
+  date: number;
 }
 
 const RegisterForm: React.FC = () => {
@@ -81,10 +100,21 @@ const RegisterForm: React.FC = () => {
         message: "password must not exceed 100 characters",
       },
     }),
+    date: register("date", {
+      required: {
+        value: true,
+        message: "date is required",
+      },
+    }),
   };
 
   const handleFormSubmit = (data: RegisterFormData) => {
-    dispatch(authModel.actions.registerAsOrg(data));
+    dispatch(
+      authModel.actions.registerAsOrg({
+        ...data,
+        date: new Date((data as any).date),
+      } as any),
+    );
   };
 
   return (
@@ -108,6 +138,16 @@ const RegisterForm: React.FC = () => {
         type="password"
         placeholder="x x x x x x x"
         variant="flushed"
+      />
+
+      <Input
+        {...form.date}
+        type="number"
+        min="1990"
+        max="2022"
+        step="1"
+        variant="flushed"
+        placeholder="Foundation year"
       />
 
       <Button type="submit" disabled={!formState.isValid}>

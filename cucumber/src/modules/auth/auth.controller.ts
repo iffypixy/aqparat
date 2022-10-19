@@ -43,6 +43,7 @@ export class AuthController {
       name: dto.name,
       password,
       avatar,
+      foundationDate: dto.date,
     });
 
     await org.save();
@@ -80,6 +81,7 @@ export class AuthController {
       lastName: dto.lastName,
       password,
       avatar,
+      birthDate: dto.date,
     });
 
     await volunteer.save();
@@ -138,8 +140,6 @@ export class AuthController {
 
   @Get("/credentials")
   async getCredentials(@Session() session: Sess) {
-    console.log(session);
-
     return {
       type: session.type,
       credentials: session[session.type],

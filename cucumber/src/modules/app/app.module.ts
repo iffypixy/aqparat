@@ -9,6 +9,7 @@ import {
   Organisation,
   OrganisationProfile,
   OrganisationVolunteer,
+  OrganisationInvitation,
 } from "@modules/organisation";
 import {VolunteerModule, Volunteer} from "@modules/volunteer";
 import {AuthModule} from "@modules/auth";
@@ -42,10 +43,13 @@ const env = process.env.NODE_ENV || "development";
           Volunteer,
           OrganisationVolunteer,
           File,
+          OrganisationVolunteer,
+          OrganisationInvitation,
         ],
       }),
     }),
     VolunteerModule,
+
     OrganisationModule,
     EventModule,
     AuthModule,

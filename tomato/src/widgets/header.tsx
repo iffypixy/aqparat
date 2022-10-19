@@ -1,12 +1,26 @@
-import {Heading} from "@chakra-ui/react";
+import * as React from "react";
+import {
+  HStack,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import styled from "@emotion/styled";
+
 import {
   OrganisationCredentials,
   viewerModel,
   VolunteerCredentials,
 } from "@entities/viewer";
+import {mixins} from "@shared/lib/styling";
 import {Link} from "@shared/ui/atoms";
-import * as React from "react";
+import {Icon} from "@shared/ui/icons";
+import {request} from "@shared/lib/request";
 
 export const Header: React.FC = () => {
   const credentials = viewerModel.useCredentials();
@@ -14,8 +28,8 @@ export const Header: React.FC = () => {
 
   const profileLink = credentials
     ? type === "organisation"
-      ? `/organisations/${credentials.id}`
-      : `/volunteers/${credentials.id}`
+      ? `/org/${credentials.id}`
+      : `/vol/${credentials.id}`
     : "/login";
 
   const name = credentials
@@ -26,124 +40,186 @@ export const Header: React.FC = () => {
 
   return (
     <Wrapper>
-      <Left>
-        <BurgerSVG viewBox="0 0 24 24">
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-        </BurgerSVG>
+      <HStack spacing="12rem">
+        <Title>Aqparat</Title>
 
-        <Heading as="h1" size="2xl">
-          Aqparat
-        </Heading>
-
-        <Nav>
+        <HStack spacing="4.5rem">
           <NavLink to="/">Home</NavLink>
           {credentials && type === "organisation" && (
-            <NavLink to="/my-volunteers">My volunteers</NavLink>
+            <NavLink to="/my-vols">My volunteers</NavLink>
           )}
 
           {credentials && type === "volunteer" && (
-            <NavLink to="/my-organisations">My organisations</NavLink>
+            <NavLink to="/my-orgs">My organisations</NavLink>
           )}
 
-          {credentials && <NavLink to="/events">My events</NavLink>}
+          {credentials && <NavLink to="/my-events">My events</NavLink>}
           <NavLink to="/news">News</NavLink>
-        </Nav>
-      </Left>
+        </HStack>
+      </HStack>
 
-      <Right>
-        <NavLink
-          style={{color: "#FF9548", display: "inline-flex"}}
-          to={profileLink}
-        >
+      <HStack spacing="2rem">
+        {window["invites"] && (
+          <Popover>
+            <PopoverTrigger>
+              <HStack sx={{position: "relative"}}>
+                <BellIcon />
+
+                {window["invites"] && (
+                  <Text
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      right: 0,
+                      color: "red",
+                      fontSize: "1.5rem",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {window["invites"].length}
+                  </Text>
+                )}
+              </HStack>
+            </PopoverTrigger>
+
+            <Invites>
+              <InvitesTitle>New invitations</InvitesTitle>
+
+              <PopoverBody>
+                <VStack>
+                  {window["invites"]?.map((invite, idx) => (
+                    <HStack key={idx} w="100%" justify="space-between">
+                      <Text
+                        style={{
+                          textTransform: "uppercase",
+                          fontSize: "1.4rem",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {invite.organisation.name}
+                      </Text>
+
+                      <HStack spacing="1rem">
+                        <TickIcon
+                          onClick={() => {
+                            request({
+                              url: "/organisations/invitations/accept",
+                              method: "POST",
+                              data: {
+                                id: invite.id,
+                              },
+                            });
+
+                            window["invites"] = window["invites"].filter(
+                              (i) => i.id !== invite.id,
+                            );
+                          }}
+                        />
+                        <CrossIcon />
+                      </HStack>
+                    </HStack>
+                  ))}
+                </VStack>
+              </PopoverBody>
+            </Invites>
+          </Popover>
+        )}
+
+        <ProfileLink to={profileLink}>
           {name}
-          <SignInSVG
-            viewBox="0 0 10 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="4.06506"
-              y="0.393295"
-              width="1.86468"
-              height="10.2558"
-              rx="0.932341"
-            />
-            <rect
-              x="3.67334"
-              y="1.31853"
-              width="1.86468"
-              height="7.08258"
-              rx="0.932341"
-              transform="rotate(-45 3.67334 1.31853)"
-            />
-            <rect
-              width="1.86468"
-              height="7.06462"
-              rx="0.932341"
-              transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 5.00815)"
-            />
-          </SignInSVG>
-        </NavLink>
-      </Right>
+
+          <ArrowUpIcon />
+        </ProfileLink>
+      </HStack>
     </Wrapper>
   );
 };
 
-const Wrapper = styled("div")`
+const Wrapper = styled(HStack)`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4rem 6rem;
+  box-shadow: 0 0 10px 5px #2d2d2d;
+  padding: 2rem 10rem;
 `;
 
-const Left = styled("div")`
-  display: flex;
-  align-items: center;
+const Title = styled("h1")`
+  color: #2d2d2d;
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  user-select: none;
+  transition: 0.2s linear;
 
-  & > :not(:last-child) {
-    margin-right: 6.5rem;
+  &:hover {
+    color: #ff9548;
   }
+
+  ${mixins.clickfall}
 `;
 
-const Right = styled("div")`
-  display: flex;
-  align-items: center;
-
-  & > :not(:last-child) {
-    margin-right: 1.5rem;
-  }
-`;
-
-const Nav = styled("nav")`
-  display: flex;
-  align-items: center;
-
-  & > :not(:last-child) {
-    margin-right: 4rem;
-  }
-`;
-
-const BurgerSVG = styled("svg")`
-  width: 4rem;
-  cursor: pointer;
-  transition: 0.05s linear;
-
-  &:active {
-    transform: scale(0.9);
-    transform-origin: 50% 50%;
-  }
-`;
-
-const SignInSVG = styled("svg")`
+const ArrowUpIcon = styled(Icon.ArrowUp)`
   width: 1.5rem;
   fill: #2d2d2d;
-  cursor: pointer;
+  transition: 0.2s linear;
   margin-left: 1rem;
 `;
 
 const NavLink = styled(Link)`
   color: #2d2d2d;
+  font-family: "Rubik", sans-serif;
   font-weight: 500;
-  font-size: 1.75rem;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  transition: 0.2s linear;
+
+  &:hover {
+    color: #ff9548;
+  }
+`;
+
+const ProfileLink = styled(NavLink)`
+  color: #ff9548;
+  display: inline-flex;
+
+  &:hover {
+    & > svg {
+      fill: #ff9548;
+    }
+  }
+`;
+
+const BellIcon = styled(Icon.Bell)`
+  width: 2rem;
+  fill: #ff9548;
+  cursor: pointer;
+`;
+
+const Invites = styled(PopoverContent)`
+  width: 35rem !important;
+  background-color: #ffe0ba;
+  padding: 1rem;
+`;
+
+const InvitesTitle = styled(PopoverHeader)`
+  font-weight: 700;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  margin: auto;
+  text-align: center;
+  border-bottom: none;
+`;
+
+const TickIcon = styled(Icon.Tick)`
+  width: 2rem;
+  fill: green;
+  cursor: pointer;
+`;
+
+const CrossIcon = styled(Icon.Cross)`
+  width: 1.5rem;
+  fill: red;
+  cursor: pointer;
 `;

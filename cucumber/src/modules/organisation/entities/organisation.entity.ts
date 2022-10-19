@@ -40,9 +40,14 @@ export class Organisation extends BaseEntity {
   @OneToMany(() => Event, (event) => event.organisation)
   pinnedEvents: Event;
 
-  get public() {
-    const {id, avatar, name} = this;
+  @Column({
+    type: "date",
+  })
+  foundationDate: Date;
 
-    return {id, avatar, name};
+  get public() {
+    const {id, avatar, name, foundationDate} = this;
+
+    return {id, avatar, name, foundationDate};
   }
 }

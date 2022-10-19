@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import {useForm} from "react-hook-form";
-import {Heading, Select} from "@chakra-ui/react";
+import {Heading, Select, VStack} from "@chakra-ui/react";
 
 import {authModel, AuthTemplate} from "@features/auth";
 import {Input, Link, Button} from "@shared/ui/atoms";
@@ -9,22 +9,24 @@ import {useDispatch} from "@shared/lib/store";
 import {regex} from "@shared/lib/regex";
 import {UserType} from "@entities/user";
 
-export const LoginPage: React.FC = () => {
-  return (
-    <AuthTemplate>
-      <Wrapper>
-        <Heading as="h1" size="4x1">
-          Sign in
-        </Heading>
+export const LoginPage: React.FC = () => (
+  <AuthTemplate>
+    <Wrapper>
+      <Title>Sign in</Title>
 
-        <LoginForm />
+      <LoginForm />
 
-        <Link to="/register-as-volunteer">Create account as volunteer</Link>
-        <Link to="/register-as-org">Create account as organisation</Link>
-      </Wrapper>
-    </AuthTemplate>
-  );
-};
+      <VStack>
+        <RegisterLink to="/register-as-volunteer">
+          Create account as volunteer
+        </RegisterLink>
+        <RegisterLink to="/register-as-org">
+          Create account as organisation
+        </RegisterLink>
+      </VStack>
+    </Wrapper>
+  </AuthTemplate>
+);
 
 const Wrapper = styled("div")`
   display: flex;
@@ -33,6 +35,20 @@ const Wrapper = styled("div")`
   & > :not(:first-child) {
     margin-top: 2rem;
   }
+`;
+
+const Title = styled("h1")`
+  color: #2d2d2d;
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+`;
+
+const RegisterLink = styled(Link)`
+  font-size: 1.4rem;
+  text-decoration: underline;
+  text-transform: uppercase;
+  opacity: 0.65;
 `;
 
 interface LoginFormData {
@@ -129,7 +145,8 @@ const Form = styled("form")`
 
 const Choice = styled(Select)`
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   height: auto;
   padding: 1.5rem;
+  text-transform: uppercase;
 `;

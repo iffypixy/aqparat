@@ -9,10 +9,10 @@ export class EventVolunteer extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(() => OrganisationVolunteer)
+  @ManyToOne(() => OrganisationVolunteer, {eager: true})
   volunteer: OrganisationVolunteer;
 
-  @ManyToOne(() => Event)
+  @ManyToOne(() => Event, {eager: true})
   event: Event;
 
   get public() {

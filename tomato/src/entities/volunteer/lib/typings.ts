@@ -3,4 +3,5 @@ export interface Volunteer {
   firstName: string;
   lastName: string;
   avatar: string;
+  birthDate: string;
 }

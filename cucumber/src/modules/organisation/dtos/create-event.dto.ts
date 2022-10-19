@@ -21,4 +21,7 @@ export class CreateEventDto {
     message: "Ending date must be type of date",
   })
   endingDate: Date;
+
+  @IsString()
+  description: string;
 }

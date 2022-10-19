@@ -35,19 +35,42 @@ export class Event extends BaseEntity {
   })
   endingDate: Date;
 
-  @ManyToOne(() => Organisation)
+  @Column({
+    type: "varchar",
+    length: 1024,
+  })
+  description: string;
+
+  @Column({
+    type: "boolean",
+    default: false,
+  })
+  isFinished: boolean;
+
+  @ManyToOne(() => Organisation, {eager: true})
   organisation: Organisation;
 
   get public() {
-    const {id, name, places, startDate, endingDate, organisation} = this;
-
-    return {
+    const {
       id,
       name,
       places,
       startDate,
       endingDate,
+      organisation,
+      description,
+      isFinished,
+    } = this;
+
+    return {
+      id,
+      isFinished,
+      name,
+      places,
+      startDate,
+      endingDate,
       organisation: organisation.public,
+      description,
     };
   }
 }

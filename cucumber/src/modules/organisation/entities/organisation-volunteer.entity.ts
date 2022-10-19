@@ -9,15 +9,19 @@ export class OrganisationVolunteer extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(() => Volunteer)
+  @ManyToOne(() => Volunteer, {eager: true})
   volunteer: Volunteer;
 
-  @ManyToOne(() => Organisation)
+  @ManyToOne(() => Organisation, {eager: true})
   organisation: Organisation;
 
   get public() {
     const {volunteer, organisation} = this;
 
-    return {...volunteer.public, organisation: organisation.public};
+    return {
+      ...volunteer.public,
+      organisation: organisation.public,
+      id: this.id,
+    };
   }
 }

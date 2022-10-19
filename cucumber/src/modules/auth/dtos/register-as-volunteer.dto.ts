@@ -49,4 +49,6 @@ export class RegisterAsVolunteerDto {
     message: "Password must contain at most 50 characters",
   })
   password: string;
+
+  date: string;
 }

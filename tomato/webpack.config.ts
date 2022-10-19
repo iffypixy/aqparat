@@ -91,6 +91,19 @@ export default ({env}: ConfigurationProps): webpack.Configuration => {
           type: "asset/inline",
           resourceQuery: /url/,
         },
+        {
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          resourceQuery: {not: [/url/]},
+          use: [
+            {
+              loader: "@svgr/webpack",
+              options: {
+                typescript: true,
+              },
+            },
+          ],
+        },
       ],
     },
     devtool: isDev && "eval",

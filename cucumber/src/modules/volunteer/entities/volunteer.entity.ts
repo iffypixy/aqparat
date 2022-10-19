@@ -36,9 +36,14 @@ export class Volunteer extends BaseEntity {
   })
   avatar: string;
 
-  get public() {
-    const {id, avatar, firstName, lastName} = this;
+  @Column({
+    type: "date",
+  })
+  birthDate: Date;
 
-    return {id, avatar, firstName, lastName};
+  get public() {
+    const {id, avatar, firstName, lastName, birthDate} = this;
+
+    return {id, avatar, firstName, lastName, birthDate};
   }
 }

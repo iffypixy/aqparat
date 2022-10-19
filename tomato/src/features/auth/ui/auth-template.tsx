@@ -28,6 +28,10 @@ const Wrapper = styled("div")`
   height: 100%;
   background-color: #ffead1;
   padding: 6rem;
+
+  @media only screen and (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 const Content = styled("div")`
@@ -45,6 +49,10 @@ const ImageBlock = styled("div")`
   background-image: url(${block});
   background-size: cover;
   background-position: bottom;
+
+  @media only screen and (max-width: 992px) {
+    display: none;
+  }
 `;
 
 const FormBlock = styled("div")`
@@ -54,9 +62,17 @@ const FormBlock = styled("div")`
   width: 50%;
   height: 100%;
   background-color: #ffdfb9;
+
+  @media only screen and (max-width: 992px) {
+    width: 100%;
+  }
 `;
 
 const FormBlockContent = styled("div")`
   width: 50%;
   text-align: center;
+
+  @media only screen and (max-width: 768px) {
+    width: 85%;
+  }
 `;

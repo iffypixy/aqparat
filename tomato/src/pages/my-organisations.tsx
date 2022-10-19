@@ -1,81 +1,135 @@
-import {
-  Container,
-  Heading,
-  Table,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import * as React from "react";
+import {Container, HStack, Stack, Text, VStack} from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import {css} from "@emotion/react";
+import {useNavigate} from "react-router-dom";
+
 import {Template} from "@shared/ui/templates";
 import {Header} from "@widgets/header";
-import * as React from "react";
+import {Icon} from "@shared/ui/icons";
+import {viewerModel} from "@entities/viewer";
+import {Organisation} from "@entities/organisation";
+import {request} from "@shared/lib/request";
 
-export const MyOrganisations: React.FC = () => {
+export const MyOrganisationsPage: React.FC = () => {
+  const credentials = viewerModel.useCredentials()!;
+
+  const [orgs, setOrgs] = React.useState<Organisation[]>([]);
+
+  React.useEffect(() => {
+    request({url: `/volunteers/${credentials.id}/organisations`}).then((res) =>
+      setOrgs(res.data.organisations),
+    );
+  }, []);
+
+  const empty = orgs.length === 0;
+
+  const navigate = useNavigate();
+
+  const handleClick = (orgId: string) => {
+    navigate(`/org/${orgId}`);
+  };
+
   return (
     <Template.Main header={<Header />}>
       <Container maxW="container.xl">
-        <Wrapper>
-          <Heading as="h2" size="4x1" style={{fontSize: "3.4rem"}}>
-            Organisations I am in
-          </Heading>
+        <VStack justify="center" align="center" spacing="5rem" mt="5rem">
+          <Title>My organisations</Title>
 
-          <TableContainer>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>name</Th>
-                  <Th isNumeric>no. volunteers</Th>
-                  <Th isNumeric>foundation date</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>astana jastary</Td>
-                  <Td>403</Td>
-                  <Td isNumeric>12.04.2014</Td>
-                </Tr>
-                <Tr>
-                  <Td>for jastar</Td>
-                  <Td>254</Td>
-                  <Td isNumeric>14.11.2018</Td>
-                </Tr>
-                <Tr>
-                  <Td>volunteers</Td>
-                  <Td>101</Td>
-                  <Td isNumeric>01.12.2021</Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Wrapper>
+          <VStack w="100%">
+            {!empty && (
+              <Org>
+                <Stack w="30%">
+                  <Key>foundation date</Key>
+                </Stack>
+
+                <Stack w="50%">
+                  <Key>title</Key>
+                </Stack>
+
+                <HStack w="20%" justify="flex-end" />
+              </Org>
+            )}
+
+            {empty && <Empty>You have no organisations</Empty>}
+
+            <VStack w="100%">
+              {orgs.map((org, idx) => (
+                <Org key={idx} onClick={() => handleClick(org.id)} interactive>
+                  <Stack w="30%">
+                    <Value>
+                      {new Date()
+                        .toJSON()
+                        .slice(0, 10)
+                        .split("-")
+                        .reverse()
+                        .join(".")}
+                    </Value>
+                  </Stack>
+
+                  <Stack w="50%">
+                    <Value>{org.name}</Value>
+                  </Stack>
+
+                  <HStack w="20%" justify="flex-end">
+                    <RoundedArrowRightIcon />
+                  </HStack>
+                </Org>
+              ))}
+            </VStack>
+          </VStack>
+        </VStack>
       </Container>
     </Template.Main>
   );
 };
 
-const Wrapper = styled("div")`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 5rem;
-
-  & > :not(:first-child) {
-    margin-top: 5rem;
-  }
+const Title = styled("h1")`
+  color: #2d2d2d;
+  font-weight: 700;
+  text-transform: uppercase;
 `;
 
-const List = styled("div")`
-  & > :not(:first-child) {
-    margin-top: 1rem;
-  }
+const RoundedArrowRightIcon = styled(Icon.RoundedArrowRight)`
+  width: 2rem;
+  cursor: pointer;
 `;
 
-const TT = styled(Table)``;
+const Empty = styled("h3")`
+  font-size: 2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  opacity: 0.6;
+`;
+
+interface OrgProps {
+  interactive?: boolean;
+}
+
+const Org = styled(HStack)<OrgProps>`
+  width: 100%;
+  border-bottom: 2px solid #ffe0ba;
+  transition: 0.2s linear;
+  cursor: pointer;
+  padding: 2rem 0;
+
+  ${({interactive}) =>
+    interactive &&
+    css`
+      &:hover {
+        padding-left: 1rem;
+        background-color: #ffe0ba;
+      }
+    `}
+`;
+
+const Value = styled(Text)`
+  font-size: 1.4rem;
+  text-transform: uppercase;
+`;
+
+const Key = styled(Text)`
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-transform: uppercase;
+`;

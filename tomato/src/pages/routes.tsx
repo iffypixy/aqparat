@@ -7,8 +7,11 @@ import {LoginPage, RegisterAsOrgPage, RegisterAsVolunteerPage} from "./auth";
 import {Home} from "./home/index";
 import {VolunteerPage} from "./volunteer";
 import {OrganisationPage} from "./organisation";
-import {MyOrganisations} from "./my-organisations";
-import {MyVolunteers} from "./my-volunteers";
+import {MyOrganisationsPage} from "./my-organisations";
+import {MyVolunteersPage} from "./my-volunteers";
+import {MyEventsPage} from "./my-events";
+import {NewsPage} from "./news";
+import {EventPage} from "./event";
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -41,9 +44,12 @@ export const Routes: React.FC = () => (
       }
     />
 
-    <Route path="/volunteers/:id" element={<VolunteerPage />} />
-    <Route path="/organisations/:id" element={<OrganisationPage />} />
-    <Route path="/my-organisations" element={<MyOrganisations />} />
-    <Route path="/my-volunteers" element={<MyVolunteers />} />
+    <Route path="/vol/:id" element={<VolunteerPage />} />
+    <Route path="/org/:id" element={<OrganisationPage />} />
+    <Route path="/event/:id" element={<EventPage />} />
+    <Route path="/my-orgs" element={<MyOrganisationsPage />} />
+    <Route path="/my-vols" element={<MyVolunteersPage />} />
+    <Route path="/my-events" element={<MyEventsPage />} />
+    <Route path="/news" element={<NewsPage />} />
   </Switch>
 );
